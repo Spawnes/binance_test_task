@@ -1,0 +1,12 @@
+<div class="server-time">
+  {{ getExchangeTime() }}
+  <div class="server-time-tooltip" #serverTimeTooltip>
+    Серверное время: {{ serverTime$ | async | date: 'HH:mm:ss' }}
+  </div>
+  <span
+    class="server-time-question"
+    (mouseover)="showTooltip(serverTimeTooltip)"
+    (mouseout)="hideTooltip(serverTimeTooltip)"
+    >Server Time</span
+  >
+</div>

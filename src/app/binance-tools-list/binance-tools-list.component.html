@@ -1,0 +1,52 @@
+<div class="header-container">
+  <h2>Список инструментов Binance</h2>
+  <app-server-time></app-server-time>
+</div>
+
+<div class="content-container">
+  <div class="spinner-container" *ngIf="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <app-search [searchTerm]="searchTerm" (searchTermChange)="filterTools($event)"></app-search>
+
+  <div class="tools-table-container" #tableContainer>
+    <table *ngIf="!loading && displayedTools.length > 0" class="fade-in">
+      <thead>
+        <tr>
+          <th title="Порядковый номер инструмента в списке">#</th>
+          <th title="Символ инструмента (например, BTCUSDT)">Символ</th>
+          <th title="Базовая валюта инструмента (например, BTC)">Базовая валюта</th>
+          <th title="Котируемая валюта инструмента (например, USDT)">Котируемая валюта</th>
+          <th title="Последняя цена инструмента" (click)="sortTools()" class="sortable-header">
+            Цена
+            <span *ngIf="sortDirection === 'asc'" class="sort-arrow asc">▲</span>
+            <span *ngIf="sortDirection === 'desc'" class="sort-arrow desc">▼</span>
+          </th>
+          <th title="Объем торгов инструмента за 24 часа">Объем торгов</th>
+          <th title="Изменение цены инструмента в процентах за 24 часа">% за 24ч</th>
+          <th title="Наивысшая цена инструмента за 24 часа">Высшая цена</th>
+          <th title="Наименьшая цена инструмента за 24 часа">Низшая цена</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tool of displayedTools; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ tool.symbol }}</td>
+          <td>{{ tool.baseAsset }}</td>
+          <td>{{ tool.quoteAsset }}</td>
+          <td>{{ tickerData[tool.symbol].lastPrice | number: '1.4-4' }}</td>
+          <td>
+            {{ formatVolume(tickerData[tool.symbol].volume) }}
+            <span class="full-volume">({{ tickerData[tool.symbol].volume }})</span>
+          </td>
+          <td>{{ tickerData[tool.symbol].priceChangePercent }}%</td>
+          <td>{{ tickerData[tool.symbol].highPrice | number: '1.4-4' }}</td>
+          <td>{{ tickerData[tool.symbol].lowPrice | number: '1.4-4' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p *ngIf="!loading && displayedTools.length === 0">Загрузка данных...</p>
+  </div>
+</div>

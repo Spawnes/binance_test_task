@@ -1,0 +1,23 @@
+.server-time {
+  position: relative;
+
+  &-tooltip {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 5px;
+    display: none;
+    max-width: 200px;
+    word-wrap: break-word;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  &-question {
+    font-size: 0.8em;
+    color: #888;
+    cursor: pointer;
+  }
+}
